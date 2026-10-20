@@ -45,7 +45,7 @@ export default function Dashboard() {
       </div>
 
       <div className="section">
-        <h2>Next 6 months <span className="hint">containers, planned production & predicted stockouts</span></h2>
+        <h2>Next 6 months <span className="hint">arrivals, planned production & predicted stockouts</span></h2>
         <Timeline events={events} windowStart={data.windowStart} windowEnd={data.windowEnd} onEvent={setEvent} />
       </div>
 
@@ -53,7 +53,7 @@ export default function Dashboard() {
       <div className="section">
         <h2>
           Have + on the way + planned vs what you need
-          <span className="hint">per product · {settings.leadTime}+{settings.coverage} month window</span>
+          <span className="hint">per product · next {settings.needWindow} months of demand</span>
         </h2>
 
         <div className="prodrow" style={{ border: "none", background: "transparent" }}>
@@ -115,7 +115,7 @@ export default function Dashboard() {
         ))}
         <div className="note">
           Have = current stock · On the way = pipeline containers · Planned = production plan ·
-          Need = forecast demand over the next {settings.leadTime + settings.coverage} months.
+          Need = forecast demand over the next {settings.needWindow} months.
           Negative surplus means you're short — the Produce column recommends how much to make.
         </div>
       </div>

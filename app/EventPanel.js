@@ -38,9 +38,32 @@ export default function EventPanel({ event, onClose }) {
         {isPlan && (
           <>
             <h3>{e.title}</h3>
-            <div className="sub">Planned production due {e.date}</div>
-            <div className="kv"><div><div className="k">Planned units</div><div className="v">{e.detail}</div></div></div>
-            <div className="note">
+            <div className="sub">
+              Planned production · target {e.targetMonth}
+              <span className={`pill ${e.planStatus === "Confirmed" ? "ok" : "low"}`}>{e.planStatus}</span>
+            </div>
+            <div className="kv">
+              <div><div className="k">Planned units</div><div className="v">{n(e.units)}</div></div>
+              <div><div className="k">Confirmed</div><div className="v">{n(e.confirmedUnits)}</div></div>
+            </div>
+            {e.lines && e.lines.length > 0 && (
+              <>
+                <div className="blk">By SKU</div>
+                <table className="mini">
+                  <thead><tr><th>SKU</th><th className="r">Units</th><th>Confirmed</th></tr></thead>
+                  <tbody>
+                    {e.lines.map((l, i) => (
+                      <tr key={i}>
+                        <td className="mono">{l.sku}</td>
+                        <td className="r">{n(l.units)}</td>
+                        <td><span className={`pill ${l.confirmed ? "ok" : "low"}`}>{l.confirmed ? "Yes" : "Tentative"}</span></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )}
+            <div className="note" style={{ marginTop: 14 }}>
               <span className="linkish" onClick={() => router.push("/production")}>Open Production planning →</span>
             </div>
           </>

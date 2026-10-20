@@ -32,7 +32,7 @@ export default function ProductionPage() {
       </div>
 
       <div className="section">
-        <h2>Demand vs production <span className="hint">next {settings.leadTime + settings.coverage} months, by product</span></h2>
+        <h2>Demand vs production <span className="hint">next {settings.needWindow} months, by product</span></h2>
         <table>
           <thead><tr>
             <th>Product</th><th className="r">Forecast demand</th><th className="r">Incoming + planned</th><th className="r">Gap</th>

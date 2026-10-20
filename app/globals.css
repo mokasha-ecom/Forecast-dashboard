@@ -125,25 +125,34 @@ td.n { font-variant-numeric: tabular-nums; }
 .alert .b { font-weight: 700; flex-shrink: 0; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; padding-top: 1px; }
 .note { font-size: 12px; color: var(--muted); margin-top: 8px; }
 
-/* ---------- timeline ---------- */
-.tl { position: relative; height: 148px; margin: 8px 8px 0; }
-.tl-axis { position: absolute; left: 0; right: 0; top: 74px; height: 2px; background: var(--line); }
-.tl-tick { position: absolute; top: 68px; width: 1px; height: 14px; background: var(--line); }
-.tl-ticklabel { position: absolute; top: 88px; font-size: 10.5px; color: var(--muted); transform: translateX(-50%); white-space: nowrap; }
-.tl-today { position: absolute; top: 44px; height: 52px; width: 2px; background: var(--ink); opacity: .5; }
-.tl-todaylabel { position: absolute; top: 30px; transform: translateX(-50%); font-size: 10px; font-weight: 700; color: var(--ink); }
-.tl-dot { position: absolute; top: 66px; width: 15px; height: 15px; border-radius: 50%; transform: translateX(-50%); border: 2.5px solid var(--panel); cursor: pointer; }
-.tl-dot.arrival { background: var(--blue); }
-.tl-dot.plan { background: var(--green); }
-.tl-dot.deadline { background: var(--amber); }
-.tl-dot.stockout, .tl-dot.delayed { background: var(--red); }
-.tl-dot:hover { transform: translateX(-50%) scale(1.3); z-index: 3; }
-.tl-tip { position: absolute; bottom: 92px; transform: translateX(-50%); background: var(--ink); color: #fff; border-radius: 8px; padding: 9px 12px; font-size: 12px; width: max-content; max-width: 240px; z-index: 6; box-shadow: 0 6px 20px rgba(0,0,0,.18); }
-.tl-tip .t { font-weight: 700; }
-.tl-tip .d { color: #ccd2db; margin-top: 2px; }
-.tl-tip .cta { color: #8fb9f0; margin-top: 5px; font-size: 11px; }
-.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; font-size: 12px; color: var(--muted); }
-.legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+/* ---------- timeline (lane layout) ---------- */
+.tl2 { position: relative; margin-top: 6px; }
+.tl2-grid { position: absolute; left: 112px; right: 8px; top: 0; bottom: 26px; pointer-events: none; z-index: 0; }
+.tl2-gl { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--line2); }
+.tl2-today { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--ink); opacity: .45; }
+.tl2-lane { position: relative; display: flex; align-items: stretch; min-height: 44px; z-index: 1; }
+.tl2-lanehead { width: 112px; flex-shrink: 0; display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--muted); font-weight: 500; padding-right: 10px; }
+.tl2-ic { font-size: 15px; }
+.tl2-track { position: relative; flex: 1; min-height: 44px; border-left: 2px solid var(--line); }
+.tl2-none { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--faint); font-size: 12px; }
+.tl2-pill {
+  position: absolute; top: 50%; transform: translateX(-50%) translateY(-50%);
+  border: none; border-radius: 999px; padding: 4px 11px; font-size: 11.5px; font-weight: 600;
+  white-space: nowrap; cursor: pointer; z-index: 2; transition: filter .12s, transform .12s;
+}
+.tl2-pill:hover { filter: brightness(.96); transform: translateX(-50%) translateY(-50%) scale(1.04); z-index: 5; }
+.tl2-tip {
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--ink); color: #fff; border-radius: 8px; padding: 9px 12px; font-size: 12px;
+  font-weight: 400; width: max-content; max-width: 240px; z-index: 20; box-shadow: 0 6px 20px rgba(0,0,0,.2);
+  white-space: normal; text-align: left; line-height: 1.4;
+}
+.tl2-tip .cta { color: #8fb9f0; font-size: 11px; }
+.tl2-axis { display: flex; height: 22px; }
+.tl2-axishead { width: 112px; flex-shrink: 0; }
+.tl2-axistrack { position: relative; flex: 1; border-left: 2px solid transparent; }
+.tl2-month { position: absolute; top: 4px; transform: translateX(-50%); font-size: 10.5px; color: var(--muted); }
+.tl2-todaylabel { position: absolute; top: 4px; transform: translateX(-50%); font-size: 10px; font-weight: 700; color: var(--ink); }
 
 /* ---------- slide-over ---------- */
 .overlay { position: fixed; inset: 0; background: rgba(18,24,33,.4); z-index: 40; }
@@ -156,13 +165,13 @@ td.n { font-variant-numeric: tabular-nums; }
 .kv .k { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
 .kv .v { font-size: 16px; font-weight: 700; margin-top: 1px; font-variant-numeric: tabular-nums; }
 .blk { font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: .05em; font-weight: 700; margin: 16px 0 8px; }
-.bars { display: flex; align-items: flex-end; gap: 5px; height: 92px; margin: 6px 0 4px; }
-.bar { flex: 1; background: #cfd5de; border-radius: 3px 3px 0 0; min-height: 3px; position: relative; }
+.bars { display: flex; align-items: flex-end; gap: 6px; height: 140px; margin: 22px 0 4px; }
+.bar { flex: 1; background: #cfd5de; border-radius: 4px 4px 0 0; min-height: 4px; position: relative; }
 .bar.corrected { background: var(--blue); }
-.bar.partial { background: var(--purple); opacity: .8; }
-.bar .cap { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--muted); }
-.barlabels { display: flex; gap: 5px; }
-.barlabels span { flex: 1; text-align: center; font-size: 9.5px; color: var(--faint); }
+.bar.partial { background: var(--purple); opacity: .85; }
+.bar .cap { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 10.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.barlabels { display: flex; gap: 6px; }
+.barlabels span { flex: 1; text-align: center; font-size: 10px; color: var(--faint); }
 .mini { font-size: 12.5px; }
 .mini th, .mini td { padding: 6px 8px; }
 
